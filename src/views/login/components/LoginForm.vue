@@ -60,8 +60,8 @@
   </el-form>
   <el-alert
     v-if="TEMPLATE_DEMO"
-    title="本地演示账号"
-    description="admin 可管理，user 只读；密码均为 123456。数据刷新后恢复。"
+    title="演示账号"
+    description="账号：admin（管理）或 user（只读）；密码均为 123456。数据刷新后恢复。"
     type="info"
     :closable="false"
     class="mt-lg"

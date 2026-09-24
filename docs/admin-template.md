@@ -14,13 +14,13 @@
 
 权限演示由实际权限管理页面提供。未迁移健身业务、微信、支付、编辑器和部署脚本。
 
-## 本地演示与接口接入
+## 演示模式与接口接入
 
 请求层采用 Axios 实例和拦截器，`src/api/index.ts` 提供默认实例与页面自行提示错误的 `customErrorService`，业务失败均拒绝 Promise；`src/utils/request.ts` 在应用启动时注入错误提示和登录失效处理。HTTP 401 和业务码 401 清除当前失效会话并跳转登录，不自动重放请求。上传使用 FormData，下载通过 `responseType: "blob"` 返回 Blob；loading 由页面管理，请求取消使用 Axios 的 `signal`。
 
 演示数据、登录校验和本地接口 adapter 位于 `src/demo`，在启动时仅向演示模式注入；API 模块统一走 Axios，不包含演示分支。未实现的演示接口返回错误，不发送真实网络请求。
 
-使用已有依赖执行 `pnpm dev`。`src/config/template.ts` 在 Vite 开发模式默认启用本地演示；在 `.env.development.local` 配置 `VITE_TEMPLATE_DEMO=false` 后重启，可接入真实服务；同时配置 `VITE_PROXY` 或 `VITE_API_URL` 指向业务后端。默认接口基址为同源 `/api`，无外部 Mock 代理。生产构建始终关闭演示。演示数据仅内存保存，刷新恢复；不保存新增管理员的密码。账号 `admin`、`user` 的登录密码均为 `123456`；只有这两个内置账号可以演示登录。角色变更会影响对应演示账号的权限，移除自身权限后可刷新恢复。
+使用已有依赖执行 `pnpm dev`。`src/config/template.ts` 在 Vite 开发模式默认启用演示；`.env.production` 为在线预览显式开启演示。接入真实服务时，将 `VITE_TEMPLATE_DEMO` 设为 `false`（生产构建需覆盖 `.env.production` 的设置），并配置 `VITE_PROXY` 或 `VITE_API_URL` 指向业务后端。默认接口基址为同源 `/api`，无外部 Mock 代理。演示数据仅内存保存，刷新恢复；不保存新增管理员的密码。账号 `admin`、`user` 的登录密码均为 `123456`；只有这两个内置账号可以演示登录。角色变更会影响对应演示账号的权限，移除自身权限后可刷新恢复。
 
 真实服务接入位置：
 

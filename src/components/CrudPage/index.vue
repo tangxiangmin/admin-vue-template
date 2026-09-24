@@ -26,7 +26,7 @@
       class="ui-row text-sm text-ui-muted"
     >
       <i class="i-ep-info-filled text-ui-accent" />
-      <span>当前为本地演示，数据将在刷新后恢复。</span>
+      <span>当前为演示模式，数据将在刷新后恢复。</span>
     </div>
     <div class="ui-panel overflow-hidden">
       <div class="ui-between p-md sm:px-lg border-b border-b-solid border-ui-border">

@@ -68,7 +68,7 @@
           :column="1"
           border
         >
-          <el-descriptions-item label="运行环境">{{ TEMPLATE_DEMO ? "本地演示" : "服务接口" }}</el-descriptions-item>
+          <el-descriptions-item label="运行环境">{{ TEMPLATE_DEMO ? "演示模式" : "服务接口" }}</el-descriptions-item>
           <el-descriptions-item label="当前账号">{{ user.userInfo.name }}</el-descriptions-item>
           <el-descriptions-item label="可访问页面">{{ accessiblePages }} 个</el-descriptions-item>
         </el-descriptions>
