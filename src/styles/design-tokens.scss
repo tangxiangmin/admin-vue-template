@@ -1,0 +1,184 @@
+/* 数值在 config/ui.ts 维护；此处仅保留 Element Plus 内部结构的适配。 */
+body {
+  font-family: var(--el-font-family);
+  font-size: var(--ui-text-md);
+  line-height: 1.5;
+  color: var(--ui-text);
+  -webkit-font-smoothing: antialiased;
+}
+button,
+input {
+  font-family: inherit;
+}
+a {
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--ui-accent);
+  outline-offset: 2px;
+}
+.card {
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+}
+.el-input,
+.el-input--large,
+.el-input--small,
+.el-textarea {
+  font-size: var(--el-font-size-base);
+}
+.el-form-item {
+  --font-size: var(--el-font-size-base);
+  --el-form-label-font-size: var(--el-font-size-base);
+}
+.el-form-item__label,
+.el-form-item__content {
+  font-size: var(--el-font-size-base);
+  line-height: var(--el-component-size);
+}
+.el-form-item__label {
+  height: auto;
+}
+.el-form--label-top .el-form-item__label {
+  line-height: 1.5;
+}
+.el-form-item__error {
+  font-size: var(--ui-text-xs);
+  line-height: 1.5;
+}
+// FormItem 在控件外包裹 content 容器；行内 Select 需要确定宽度，避免空值或占位文字被挤掉。
+.el-form--inline .el-form-item {
+  max-width: 100%;
+}
+.el-form--inline .el-form-item__content > .el-select {
+  width: var(--ui-size-filter);
+  max-width: 100%;
+}
+.el-button {
+  font-size: var(--el-font-size-base);
+  font-weight: 500;
+  height: var(--el-component-size);
+  padding: var(--ui-space-xs) var(--ui-space-md);
+}
+.el-button--large {
+  height: var(--el-component-size-large);
+}
+.el-button--small {
+  height: var(--el-component-size-small);
+  font-size: var(--ui-text-sm);
+}
+.el-button.is-link,
+.el-button.is-text {
+  height: auto;
+  min-height: 0;
+}
+.el-input {
+  --el-input-height: var(--el-component-size);
+}
+.el-input--large {
+  --el-input-height: var(--el-component-size-large);
+}
+.el-input--small {
+  --el-input-height: var(--el-component-size-small);
+}
+.el-select {
+  --el-select-font-size: var(--el-font-size-base);
+}
+.el-select__wrapper {
+  font-size: var(--el-font-size-base);
+  min-height: var(--el-component-size);
+}
+.el-select__wrapper.is-large {
+  min-height: var(--el-component-size-large);
+}
+.el-select__wrapper.is-small {
+  min-height: var(--el-component-size-small);
+}
+.el-select-dropdown__item {
+  font-size: var(--el-font-size-base);
+  min-height: var(--el-component-size);
+  height: auto;
+  line-height: var(--el-component-size);
+}
+.el-table {
+  --el-table-header-bg-color: var(--ui-canvas);
+  --el-table-row-hover-bg-color: var(--ui-canvas);
+}
+.el-table .cell {
+  line-height: 1.6;
+}
+.el-table th.el-table__cell {
+  font-weight: 500;
+  color: var(--ui-muted);
+}
+.el-pagination {
+  --el-pagination-font-size: var(--ui-text-md);
+  --el-pagination-font-size-small: var(--ui-text-sm);
+  --el-pagination-button-height: var(--el-component-size);
+  --el-pagination-button-width: var(--el-component-size);
+}
+.el-pagination__sizes .el-input .el-input__inner,
+.el-pager li {
+  font-size: var(--ui-text-md);
+}
+.el-dialog {
+  max-width: calc(100vw - var(--ui-space-xl));
+  padding: var(--ui-space-lg);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+}
+.el-dialog__header {
+  padding-bottom: var(--ui-space-lg);
+}
+.el-dialog__title {
+  font-size: var(--ui-text-xl);
+  font-weight: 600;
+}
+.el-dialog__footer {
+  border-top: 1px solid var(--ui-border);
+  margin-top: var(--ui-space-lg);
+  padding-top: var(--ui-space-md);
+}
+.el-tag {
+  --el-tag-font-size: var(--ui-text-xs);
+  height: auto;
+  min-height: var(--el-component-size-small);
+  border-radius: var(--ui-radius-sm);
+}
+.el-alert {
+  --el-alert-title-font-size: var(--ui-text-sm);
+  --el-alert-description-font-size: var(--ui-text-sm);
+}
+.el-alert__title {
+  line-height: 1.7;
+}
+.el-message-box {
+  width: var(--ui-size-confirm);
+  max-width: calc(100vw - var(--ui-space-xl));
+  border-radius: var(--ui-radius-lg);
+}
+.el-statistic {
+  --el-statistic-title-font-size: var(--ui-text-md);
+  --el-statistic-content-font-size: var(--ui-text-3xl);
+}
+.el-statistic__head {
+  line-height: 1.5;
+}
+.el-step__title,
+.el-descriptions__label,
+.el-descriptions__content {
+  font-size: var(--ui-text-md);
+}
+.el-step__description {
+  font-size: var(--ui-text-sm);
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

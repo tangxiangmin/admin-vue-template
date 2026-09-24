@@ -1,0 +1,72 @@
+/* A shared contract for inline menus and teleported horizontal/collapsed popups. */
+.workbench .workspace-menu,
+.workspace-menu-popper {
+  --el-menu-bg-color: transparent;
+  --el-menu-text-color: var(--el-text-color-regular);
+  --el-menu-hover-text-color: var(--ui-accent);
+  --el-menu-hover-bg-color: var(--ui-soft);
+  --el-menu-active-color: var(--ui-accent);
+  --el-menu-active-bg-color: var(--el-color-primary-light-9);
+  --el-menu-item-height: var(--ui-size-menu);
+  --el-menu-sub-item-height: var(--ui-size-menu);
+  --el-menu-horizontal-height: var(--ui-size-tabs);
+  --el-menu-base-level-padding: var(--ui-space-sm);
+  --el-menu-level-padding: var(--ui-space-md);
+}
+.workbench .workspace-menu {
+  width: 100%;
+  border: none;
+}
+.workbench .workspace-menu .el-menu-item,
+.workbench .workspace-menu .el-sub-menu__title,
+.workspace-menu-popper .el-menu-item,
+.workspace-menu-popper .el-sub-menu__title {
+  height: var(--ui-size-menu);
+  margin-bottom: var(--ui-space-xs);
+  border: none;
+  border-radius: var(--ui-radius-md);
+  font-size: var(--ui-text-md);
+}
+.workbench .workspace-menu .el-icon,
+.workspace-menu-popper .el-icon {
+  font-size: var(--ui-text-md);
+}
+.workbench .workspace-menu .el-menu-item.is-active,
+.workspace-menu-popper .el-menu-item.is-active {
+  font-weight: 600;
+  color: var(--ui-accent) !important;
+  background: var(--el-color-primary-light-9) !important;
+}
+.workbench .workspace-menu .el-menu-item.is-active::before,
+.workspace-menu-popper .el-menu-item.is-active::before {
+  display: none;
+}
+.workbench .workspace-menu .el-sub-menu__title:hover,
+.workspace-menu-popper .el-sub-menu__title:hover {
+  background: var(--ui-soft) !important;
+}
+.workbench .workspace-menu.el-menu--collapse .is-active > .el-sub-menu__title,
+.workbench .workspace-menu.el-menu--horizontal .is-active > .el-sub-menu__title {
+  color: var(--ui-accent) !important;
+  background: var(--el-color-primary-light-9) !important;
+  border: none;
+}
+.workbench .workspace-menu.el-menu--horizontal > .el-sub-menu,
+.workbench .workspace-menu.el-menu--horizontal > .el-menu-item {
+  margin-right: var(--ui-space-xs);
+  border: none;
+}
+.workspace-menu-popper {
+  border: 1px solid var(--ui-border) !important;
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-surface) !important;
+  box-shadow: var(--el-box-shadow-light);
+}
+.workspace-menu-popper .el-menu {
+  background: var(--ui-surface);
+}
+.workspace-menu-popper .el-menu--popup {
+  padding: var(--ui-space-xs);
+  min-width: var(--ui-size-filter);
+  border-radius: var(--ui-radius-lg);
+}

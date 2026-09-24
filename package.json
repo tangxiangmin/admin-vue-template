@@ -1,0 +1,84 @@
+{
+  "name": "admin-template",
+  "version": "0.1.0",
+  "private": true,
+  "description": "用于本地管理后台开发的 Vue 3 模板",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build --mode production",
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "lint:lint-staged": "lint-staged",
+    "prepare": "husky install",
+    "lint": "oxlint --deny-warnings .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "check": "pnpm lint && pnpm type:check && pnpm format:check"
+  },
+  "dependencies": {
+    "@antv/g2plot": "^2.4.35",
+    "@vueuse/core": "^13.1.0",
+    "axios": "^1.8.4",
+    "element-plus": "^2.9.8",
+    "md5": "^2.3.0",
+    "nprogress": "^0.2.0",
+    "pinia": "^3.0.2",
+    "pinia-plugin-persistedstate": "^4.2.0",
+    "sortablejs": "^1.15.6",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@iconify-json/ep": "^1.2.4",
+    "@types/md5": "^2.3.5",
+    "@types/nprogress": "^0.2.3",
+    "@types/sortablejs": "^1.15.8",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "autoprefixer": "^10.4.21",
+    "code-inspector-plugin": "^0.20.10",
+    "cz-git": "1.11.1",
+    "czg": "^1.11.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
+    "oxfmt": "0.70.0",
+    "oxlint": "1.85.0",
+    "postcss": "^8.5.3",
+    "rollup-plugin-visualizer": "^5.14.0",
+    "sass": "^1.87.0",
+    "typescript": "^5.8.3",
+    "unocss": "^66.10.5",
+    "unplugin-vue-setup-extend-plus": "^1.0.1",
+    "vite": "^6.3.2",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-html": "^3.2.2",
+    "vite-plugin-pwa": "^1.0.0",
+    "vite-plugin-vue-devtools": "^7.7.5",
+    "vue-tsc": "^2.2.8"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "browserslist": {
+    "production": [
+      "> 1%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=22.12 <23",
+    "pnpm": ">=9 <10"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
