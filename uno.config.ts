@@ -5,6 +5,8 @@ import { UI_CSS, UI_UNO_THEME } from "./src/config/ui";
 
 export default defineConfig({
   theme: UI_UNO_THEME,
+  // 排除样式属性选择器中的图标前缀，避免将其识别为完整图标类名。
+  blocklist: ["i-ep-"],
   preflights: [{ getCSS: () => UI_CSS }],
   // 默认只扫描 vue/jsx/html 等文件，这里补充 .ts（业务路由的图标 token 定义在 ts 中）
   content: {

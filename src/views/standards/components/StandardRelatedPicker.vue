@@ -27,6 +27,7 @@
       highlight-current-row
       @row-click="select"
     >
+      <!-- @vue-generic {IStandardRecord} -->
       <el-table-column
         label="选择"
         width="75"

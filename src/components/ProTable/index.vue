@@ -84,9 +84,9 @@
           :data="rows"
           row-key="id"
           :row-class-name="rowClassName"
-          :default-sort="{ prop: params.orderBy, order: params.order }"
+          :default-sort="defaultSort"
           :empty-text="error ? '加载失败，请点击刷新重试' : '暂无数据'"
-          @sort-change="emit('sort-change', $event)"
+          @sort-change="emit('sort-change', { prop: $event.prop ?? undefined, order: $event.order })"
           @selection-change="onSelectionChange"
           @row-click="onRowClick"
         >
@@ -195,6 +195,10 @@ const emit = defineEmits<{
   "row-click": [row: T, column: unknown, event: MouseEvent];
 }>();
 const slots = useSlots();
+const defaultSort = computed(() => {
+  const { orderBy, order } = props.params;
+  return orderBy && order ? { prop: orderBy, order } : undefined;
+});
 const queryFields = computed<IQueryField[]>(
   () =>
     props.queryFields ?? [
