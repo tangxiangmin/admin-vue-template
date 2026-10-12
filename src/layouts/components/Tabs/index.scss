@@ -3,7 +3,14 @@
   .tabs-menu {
     position: relative;
     width: 100%;
-    .el-dropdown {
+    .tabs-context-menu {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+    }
+    .tabs-more-menu {
       position: absolute;
       top: 0;
       right: 0;

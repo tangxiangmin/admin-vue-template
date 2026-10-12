@@ -9,6 +9,7 @@ export interface ITabMenu {
   icon: string;
   title: string;
   path: string;
+  fullPath?: string;
   name: string;
   close: boolean;
   isKeepAlive: boolean;

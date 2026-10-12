@@ -9,6 +9,7 @@
 | 原工具                   | 当前用法                                           | 说明                                                                        |
 | ------------------------ | -------------------------------------------------- | --------------------------------------------------------------------------- |
 | useRouteSearchRecord     | `@/hooks/useRouteSearchRecord`                     | VueUse useStorage + 路由/账号命名空间、结构校验、默认值工厂                 |
+| useSearchStore           | `@/hooks/useSearchStore`                           | CRUD 已提交查询态；URL / sessionStorage / memory / none，恢复关键词与分页   |
 | createStorageModel       | `@/utils/storage` 的命名导出                       | 保留 get/set/update/remove；移除 any、隐式字符串模式及按 key 缓存的全局单例 |
 | useDialog                | `useToggle`                                        | 直接控制布尔状态                                                            |
 | useLoading               | 读取使用 `useAsyncState`；写入沿用业务 saving 保护 | 不统一替换业务并发逻辑                                                      |
@@ -67,6 +68,8 @@ reset();
 可选参数：`key` 用于同一路由下区分多个表单；`version` 用于缓存结构变更；`storage: 'session'` 切换到标签页会话存储。相同路由参数代表不同业务资源时，显式把资源 ID 纳入 key。
 
 默认记录输入草稿，查询时复制草稿作为已提交条件。恢复条件后是否自动查询由页面决定。本 hook 不改 URL query、不请求接口、不处理分页；业务查询与重置仍需设置页码。搜索草稿关闭跨标签页同步，避免其他标签页输入覆盖当前表单。不要在同一页面重复挂载相同 key 的独立草稿。
+
+CRUD 列表使用 `useSearchStore` 保存已提交条件，由 `useCrud` 恢复关键词和分页后请求。业务页面通过 `CrudPage` / `CrudDrawerPage` 的 `searchStoreOptions` 配置：默认 URL 持久化，`{ type: 'sessionStorage', key: 'orders' }` 保存本次浏览器标签页会话，`{ type: 'memory', key: 'picker' }` 保留同一 pathname 内组件重挂载的条件，`{ type: 'none' }` 不持久化。URL 参数采用保留的 `__query_state__` 命名空间，与抽屉深链及业务 query 合并；工作标签的导航地址保留搜索态，缓存标识忽略搜索态。配置与人工验收项见 [业务模板规范](./admin-template.md#crud-搜索持久化)。
 
 缓存无法解析或校验失败时返回默认值，并通过 storageError 提示；错误记录不会静默删除，下次修改或重置会写入有效值。浏览器禁用存储/配额不足时保留内存表单状态并提示保存失败。只保存 JSON 可序列化数据，不保存密码、token、文件、DOM、函数和响应式对象图。
 

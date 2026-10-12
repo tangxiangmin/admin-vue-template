@@ -84,6 +84,11 @@ function createApi<T extends { id?: number }>(rows: { value: T[] }, uniqueKey: k
         total: filtered.length
       };
     },
+    async getDetail(id) {
+      const record = rows.value.find(row => row.id === id);
+      if (!record) throw new Error("记录不存在，请刷新列表");
+      return copy(record);
+    },
     async add(row) {
       check(row);
       rows.value = [...rows.value, { ...copy(row), id: nextId++ }];
@@ -125,3 +130,10 @@ export function getDemoPermissions(token: string): string[] {
 
 const examples = ref<IExample[]>([{ id: 1, name: "示例记录", status: 1, remark: "复制此页面接入业务接口" }]);
 export const demoExampleApi = createApi(examples, "name");
+
+const drawerExamples = ref<IExample[]>([
+  { id: 1, name: "示例记录", status: 1, remark: "点击行查看详情，在详情内编辑" },
+  { id: 2, name: "待完善记录", status: 0, remark: "编辑时可打开备注选择器" },
+  { id: 3, name: "已启用记录", status: 1, remark: "用于切换详情与复制新增" }
+]);
+export const demoDrawerExampleApi = createApi(drawerExamples, "name");

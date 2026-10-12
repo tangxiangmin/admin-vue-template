@@ -74,18 +74,176 @@ export const businessRouter: Menu.IMenuOptions[] = [
     ]
   },
   {
-    path: "/templates/crud",
-    name: "templateCrud",
-    component: () => import("@/views/templates/crud.vue"),
+    path: "/templates",
+    name: "templates",
+    redirect: "/templates/crud",
     meta: {
       title: "CRUD 页面模板",
       icon: "i-ep-document",
-      permission: "template.example.view",
       isHide: false,
       isFull: false,
       isAffix: false,
       isKeepAlive: false
+    },
+    children: [
+      {
+        path: "/templates/crud",
+        name: "templateCrud",
+        component: () => import("@/views/templates/crud.vue"),
+        meta: {
+          title: "基础表格与弹窗",
+          icon: "i-ep-document",
+          permission: "template.example.view",
+          isHide: false,
+          isFull: false,
+          isAffix: false,
+          isKeepAlive: false
+        }
+      },
+      {
+        path: "/templates/crud-drawer",
+        name: "templateCrudDrawer",
+        component: () => import("@/views/templates/crud-drawer.vue"),
+        meta: {
+          title: "表格与抽屉交互",
+          icon: "i-ep-document",
+          permission: "template.example.view",
+          isHide: false,
+          isFull: false,
+          isAffix: false,
+          isKeepAlive: false
+        }
+      }
+    ]
+  },
+  {
+    path: "/examples/crud-drawer",
+    name: "exampleCrudDrawerRedirect",
+    redirect: "/templates/crud-drawer",
+    meta: {
+      title: "表格与抽屉交互",
+      icon: "i-ep-document",
+      permission: "template.example.view",
+      isHide: true,
+      isFull: false,
+      isAffix: false,
+      isKeepAlive: false
     }
+  },
+  {
+    path: "/standards",
+    name: "standards",
+    redirect: "/standards/table",
+    meta: {
+      title: "标准页面示例",
+      icon: "i-ep-grid",
+      isHide: false,
+      isFull: false,
+      isAffix: false,
+      isKeepAlive: false
+    },
+    children: [
+      {
+        path: "/standards/table",
+        name: "standardTable",
+        component: () => import("@/views/standards/table.vue"),
+        meta: {
+          title: "标准表格列表",
+          icon: "i-ep-document",
+          permission: "template.example.view",
+          isHide: false,
+          isFull: false,
+          isAffix: false,
+          isKeepAlive: false
+        }
+      },
+      {
+        path: "/standards/query-tabs",
+        name: "standardQueryTabs",
+        component: () => import("@/views/standards/query-tabs.vue"),
+        meta: {
+          title: "多 Tab 查询列表",
+          queryTabs: true,
+          icon: "i-ep-document",
+          permission: "template.example.view",
+          isHide: false,
+          isFull: false,
+          isAffix: false,
+          isKeepAlive: false
+        }
+      },
+      {
+        path: "/standards/tree",
+        name: "standardTree",
+        component: () => import("@/views/standards/tree.vue"),
+        meta: {
+          title: "左树右表",
+          icon: "i-ep-document",
+          permission: "template.example.view",
+          isHide: false,
+          isFull: false,
+          isAffix: false,
+          isKeepAlive: false
+        }
+      },
+      {
+        path: "/standards/cards",
+        name: "standardCards",
+        component: () => import("@/views/standards/cards.vue"),
+        meta: {
+          title: "卡片列表",
+          icon: "i-ep-document",
+          permission: "template.example.view",
+          isHide: false,
+          isFull: false,
+          isAffix: false,
+          isKeepAlive: false
+        }
+      },
+      {
+        path: "/standards/inbound",
+        name: "standardInbound",
+        component: () => import("@/views/standards/inbound.vue"),
+        meta: {
+          title: "入站参数与深链",
+          queryInboundKeys: ["keyword", "status", "groupId"],
+          icon: "i-ep-document",
+          permission: "template.example.view",
+          isHide: false,
+          isFull: false,
+          isAffix: false,
+          isKeepAlive: false
+        }
+      },
+      {
+        path: "/standards/customize",
+        name: "standardCustomize",
+        component: () => import("@/views/standards/customize.vue"),
+        meta: {
+          title: "字段级定制",
+          icon: "i-ep-document",
+          permission: "template.example.view",
+          isHide: false,
+          isFull: false,
+          isAffix: false,
+          isKeepAlive: false
+        }
+      },
+      {
+        path: "/standards/forms",
+        name: "standardForms",
+        component: () => import("@/views/standards/forms.vue"),
+        meta: {
+          title: "表单场景与挽留",
+          icon: "i-ep-document",
+          permission: "template.example.view",
+          isHide: false,
+          isFull: false,
+          isAffix: false,
+          isKeepAlive: false
+        }
+      }
+    ]
   },
   {
     path: "/examples",
@@ -100,6 +258,19 @@ export const businessRouter: Menu.IMenuOptions[] = [
       isKeepAlive: false
     },
     children: [
+      {
+        path: "/examples/form-leave",
+        name: "exampleFormLeave",
+        component: () => import("@/views/examples/form-leave.vue"),
+        meta: {
+          title: "未保存修改挽留",
+          icon: "i-ep-warning",
+          isHide: false,
+          isFull: false,
+          isAffix: false,
+          isKeepAlive: false
+        }
+      },
       {
         path: "/examples/ui",
         name: "exampleUi",
@@ -156,138 +327,6 @@ export const businessRouter: Menu.IMenuOptions[] = [
           isFull: false,
           isAffix: false,
           isKeepAlive: false
-        }
-      }
-    ]
-  },
-  {
-    path: "/menu",
-    name: "menu",
-    redirect: "/menu/menu1",
-    meta: {
-      icon: "i-ep-list",
-      title: "菜单嵌套",
-      isLink: "",
-      isHide: false,
-      isFull: false,
-      isAffix: false,
-      isKeepAlive: true
-    },
-    children: [
-      {
-        path: "/menu/menu1",
-        name: "menu1",
-        component: () => import("@/views/menu/menu1/index.vue"),
-        meta: {
-          icon: "i-ep-menu",
-          title: "菜单1",
-          isLink: "",
-          isHide: false,
-          isFull: false,
-          isAffix: false,
-          isKeepAlive: true
-        }
-      },
-      {
-        path: "/menu/menu2",
-        name: "menu2",
-        redirect: "/menu/menu2/menu21",
-        meta: {
-          icon: "i-ep-menu",
-          title: "菜单2",
-          isLink: "",
-          isHide: false,
-          isFull: false,
-          isAffix: false,
-          isKeepAlive: true
-        },
-        children: [
-          {
-            path: "/menu/menu2/menu21",
-            name: "menu21",
-            component: () => import("@/views/menu/menu2/menu21/index.vue"),
-            meta: {
-              icon: "i-ep-menu",
-              title: "菜单2-1",
-              isLink: "",
-              isHide: false,
-              isFull: false,
-              isAffix: false,
-              isKeepAlive: true
-            }
-          },
-          {
-            path: "/menu/menu2/menu22",
-            name: "menu22",
-            redirect: "/menu/menu2/menu22/menu221",
-            meta: {
-              icon: "i-ep-menu",
-              title: "菜单2-2",
-              isLink: "",
-              isHide: false,
-              isFull: false,
-              isAffix: false,
-              isKeepAlive: true
-            },
-            children: [
-              {
-                path: "/menu/menu2/menu22/menu221",
-                name: "menu221",
-                component: () => import("@/views/menu/menu2/menu22/menu221/index.vue"),
-                meta: {
-                  icon: "i-ep-menu",
-                  title: "菜单2-2-1",
-                  isLink: "",
-                  isHide: false,
-                  isFull: false,
-                  isAffix: false,
-                  isKeepAlive: true
-                }
-              },
-              {
-                path: "/menu/menu2/menu22/menu222",
-                name: "menu222",
-                component: () => import("@/views/menu/menu2/menu22/menu222/index.vue"),
-                meta: {
-                  icon: "i-ep-menu",
-                  title: "菜单2-2-2",
-                  isLink: "",
-                  isHide: false,
-                  isFull: false,
-                  isAffix: false,
-                  isKeepAlive: true
-                }
-              }
-            ]
-          },
-          {
-            path: "/menu/menu2/menu23",
-            name: "menu23",
-            component: () => import("@/views/menu/menu2/menu23/index.vue"),
-            meta: {
-              icon: "i-ep-menu",
-              title: "菜单2-3",
-              isLink: "",
-              isHide: false,
-              isFull: false,
-              isAffix: false,
-              isKeepAlive: true
-            }
-          }
-        ]
-      },
-      {
-        path: "/menu/menu3",
-        name: "menu3",
-        component: () => import("@/views/menu/menu3/index.vue"),
-        meta: {
-          icon: "i-ep-menu",
-          title: "菜单3",
-          isLink: "",
-          isHide: false,
-          isFull: false,
-          isAffix: false,
-          isKeepAlive: true
         }
       }
     ]

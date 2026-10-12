@@ -20,6 +20,7 @@ export const UI_CONFIG = {
   provider: { size: "default" as "small" | "default" | "large", button: { autoInsertSpace: false } },
   space: { xs: "0.5rem", sm: "0.75rem", md: "1rem", lg: "1.5rem", xl: "2rem" },
   radius: { sm: "0.375rem", md: "0.5rem", lg: "0.75rem" },
+  motion: { "drawer-duration": "120ms" },
   size: {
     page: "100rem",
     login: "30rem",
@@ -38,6 +39,8 @@ export const UI_CONFIG = {
     confirm: "26rem",
     search: "32rem",
     drawer: "24rem",
+    "detail-drawer": "44rem",
+    "form-drawer": "40rem",
     form: "24rem",
     filter: "16rem",
     chart: "20rem",
@@ -110,7 +113,8 @@ for (const [key, ratio] of Object.entries(UI_CONFIG.font.scale)) variables[`--ui
 for (const [group, values] of Object.entries({
   space: UI_CONFIG.space,
   radius: UI_CONFIG.radius,
-  size: UI_CONFIG.size
+  size: UI_CONFIG.size,
+  motion: UI_CONFIG.motion
 })) {
   for (const [key, value] of Object.entries(values)) variables[`--ui-${group}-${key}`] = value;
 }

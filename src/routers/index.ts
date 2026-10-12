@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory, createWebHistory } from "vue-router
 
 import { LOGIN_URL, ROUTER_WHITE_LIST } from "@/config";
 import NProgress from "@/config/nprogress";
+import { usePageLeaveStore } from "@/stores/modules/pageLeave";
+import { getPagePath } from "@/utils/pageRoute";
 import { TEMPLATE_DEMO } from "@/config/template";
 import { errorRouter, staticRouter } from "@/routers/modules/staticRouter";
 import { useAuthStore } from "@/stores/modules/auth";
@@ -48,8 +50,12 @@ router.beforeEach(async (to, from, next) => {
     userStore.setToken("");
   }
 
-  // 1.NProgress 开始
-  NProgress.start();
+  if (from.matched.length && getPagePath(to) !== getPagePath(from)) {
+    if (!(await usePageLeaveStore().request([getPagePath(from)]))) return next(false);
+  }
+
+  // 1.首次进入或路径变化时显示进度条，同一页面的 query 更新不触发。
+  if (!from.matched.length || to.path !== from.path) NProgress.start();
 
   // 2.动态设置标题
   const title = import.meta.env.VITE_GLOB_APP_TITLE;
@@ -95,8 +101,9 @@ router.onError(error => {
 /**
  * @description 路由跳转结束
  * */
-router.afterEach(() => {
+router.afterEach((to, from, failure) => {
   NProgress.done();
+  if (!failure && getPagePath(to) !== getPagePath(from)) usePageLeaveStore().discard([getPagePath(from)]);
 });
 
 export default router;

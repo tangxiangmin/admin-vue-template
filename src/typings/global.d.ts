@@ -10,6 +10,8 @@ declare namespace Menu {
   }
   interface IMetaProps {
     permission?: string;
+    queryTabs?: boolean;
+    queryInboundKeys?: string[];
     icon: string;
     title: string;
     activeMenu?: string;

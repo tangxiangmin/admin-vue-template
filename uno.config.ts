@@ -1,4 +1,5 @@
 import { defineConfig, presetIcons, presetUno } from "unocss";
+import { icons as epIcons } from "@iconify-json/ep";
 
 import { UI_CSS, UI_UNO_THEME } from "./src/config/ui";
 
@@ -17,6 +18,9 @@ export default defineConfig({
     // Iconify 图标，使用方式：<i class="i-ep-setting" />
     // 图标集：https://icones.js.org（本项目安装了 @iconify-json/ep，Element Plus 图标）
     presetIcons({
+      collections: { ep: () => epIcons },
+      warn: true,
+      autoInstall: false,
       extraProperties: {
         display: "inline-block",
         "vertical-align": "middle"

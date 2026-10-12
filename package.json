@@ -21,7 +21,7 @@
     "@antv/g2plot": "^2.4.35",
     "@vueuse/core": "^13.1.0",
     "axios": "^1.8.4",
-    "element-plus": "^2.9.8",
+    "element-plus": "^2.14.7",
     "md5": "^2.3.0",
     "nprogress": "^0.2.0",
     "pinia": "^3.0.2",
@@ -75,10 +75,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "engines": {
-    "node": ">=22.12 <23",
-    "pnpm": ">=9 <10"
-  },
-  "packageManager": "pnpm@9.15.0"
+  }
 }

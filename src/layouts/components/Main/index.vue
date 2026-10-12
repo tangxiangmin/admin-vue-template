@@ -12,7 +12,7 @@
           <component
             :is="createComponentWrapper(Component, route)"
             v-if="isRouterShow"
-            :key="route.fullPath"
+            :key="getPagePath(route)"
           />
         </keep-alive>
       </transition>
@@ -21,7 +21,9 @@
 </template>
 
 <script setup lang="ts">
-import { useDebounceFn } from "@vueuse/core";
+import { getPagePath } from "@/utils/pageRoute";
+import { usePageLeaveStore } from "@/stores/modules/pageLeave";
+import { useDebounceFn, useEventListener } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { h, onBeforeUnmount, provide, ref, watch } from "vue";
 
@@ -31,6 +33,13 @@ import { useKeepAliveStore } from "@/stores/modules/keepAlive";
 
 import Maximize from "./components/Maximize.vue";
 
+const pageLeave = usePageLeaveStore();
+useEventListener(window, "beforeunload", event => {
+  if (pageLeave.isDirty()) {
+    event.preventDefault();
+    event.returnValue = "";
+  }
+});
 const globalStore = useGlobalStore();
 const { maximize, isCollapse, layout, tabs } = storeToRefs(globalStore);
 
@@ -46,7 +55,7 @@ provide("refresh", refreshCurrentPage);
 const wrapperMap = new Map();
 function createComponentWrapper(component, route) {
   if (!component) return;
-  const wrapperName = route.fullPath;
+  const wrapperName = getPagePath(route);
   let wrapper = wrapperMap.get(wrapperName);
   if (!wrapper) {
     wrapper = { name: wrapperName, render: () => h(component) };

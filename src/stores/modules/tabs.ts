@@ -2,6 +2,9 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 import router from "@/routers";
+import { HOME_URL } from "@/config";
+import { getPagePath } from "@/utils/pageRoute";
+import { usePageLeaveStore } from "./pageLeave";
 import type { ITabMenu } from "@/typings/store";
 import { useKeepAliveStore } from "./keepAlive";
 
@@ -11,60 +14,49 @@ export const useTabsStore = defineStore(
     const keepAliveStore = useKeepAliveStore();
 
     const tabsMenuList = ref<ITabMenu[]>([]);
+    const pageLeave = usePageLeaveStore();
 
     // Add Tabs
     const addTabs = async (tabItem: ITabMenu) => {
-      if (tabsMenuList.value.every(item => item.path !== tabItem.path)) {
+      const existing = tabsMenuList.value.find(item => item.path === tabItem.path);
+      if (!existing) {
         tabsMenuList.value.push(tabItem);
+      } else if (tabItem.fullPath !== undefined) {
+        existing.fullPath = tabItem.fullPath;
       }
       // add keepalive
-      if (!keepAliveStore.keepAliveName.includes(tabItem.name) && tabItem.isKeepAlive) {
+      if (!keepAliveStore.keepAliveName.includes(tabItem.path) && tabItem.isKeepAlive) {
         keepAliveStore.addKeepAliveName(tabItem.path);
       }
     };
 
-    // Remove Tabs
-    const removeTabs = async (tabPath: string, isCurrent: boolean = true) => {
-      if (isCurrent) {
-        tabsMenuList.value.forEach((item, index) => {
-          if (item.path !== tabPath) return;
-          const nextTab = tabsMenuList.value[index + 1] || tabsMenuList.value[index - 1];
-          if (!nextTab) return;
-          router.push(nextTab.path);
-        });
-      }
-      // remove keepalive
-      const tabItem = tabsMenuList.value.find(item => item.path === tabPath);
-      if (tabItem?.isKeepAlive) {
-        keepAliveStore.removeKeepAliveName(tabItem.path);
-      }
-      // set tabs
-      tabsMenuList.value = tabsMenuList.value.filter(item => item.path !== tabPath);
-    };
-
-    // Close Tabs On Side
-    const closeTabsOnSide = async (path: string, type: "left" | "right") => {
-      const currentIndex = tabsMenuList.value.findIndex(item => item.path === path);
-      if (currentIndex !== -1) {
-        const range = type === "left" ? [0, currentIndex] : [currentIndex + 1, tabsMenuList.value.length];
-        tabsMenuList.value = tabsMenuList.value.filter((item, index) => {
-          return index < range[0] || index >= range[1] || !item.close;
-        });
-      }
-      // set keepalive
-      const KeepAliveList = tabsMenuList.value.filter(item => item.isKeepAlive);
-      keepAliveStore.setKeepAliveName(KeepAliveList.map(item => item.path));
-    };
-
-    // Close MultipleTab
-    const closeMultipleTab = async (tabsMenuValue?: string) => {
-      tabsMenuList.value = tabsMenuList.value.filter(item => {
-        return item.path === tabsMenuValue || !item.close;
+    async function closeTabs(paths: string[]) {
+      const targets = tabsMenuList.value.filter(item => item.close && paths.includes(item.path));
+      if (!targets.length) return true;
+      const targetPaths = targets.map(item => item.path);
+      const currentPath = getPagePath(router.currentRoute.value);
+      return pageLeave.perform(targetPaths, async () => {
+        if (targetPaths.includes(currentPath)) {
+          const remaining = tabsMenuList.value.filter(item => !targetPaths.includes(item.path));
+          const currentIndex = tabsMenuList.value.findIndex(item => item.path === currentPath);
+          const next = remaining.find(item => tabsMenuList.value.indexOf(item) > currentIndex) ?? remaining.at(-1);
+          const failure = await router.push(next?.fullPath ?? next?.path ?? HOME_URL);
+          if (failure || getPagePath(router.currentRoute.value) === currentPath) return false;
+        }
+        tabsMenuList.value = tabsMenuList.value.filter(item => !targetPaths.includes(item.path));
+        keepAliveStore.setKeepAliveName(tabsMenuList.value.filter(item => item.isKeepAlive).map(item => item.path));
+        return true;
       });
-      // set keepalive
-      const KeepAliveList = tabsMenuList.value.filter(item => item.isKeepAlive);
-      keepAliveStore.setKeepAliveName(KeepAliveList.map(item => item.path));
+    }
+    const removeTabs = (tabPath: string) => closeTabs([tabPath]);
+    const closeTabsOnSide = (path: string, type: "left" | "right") => {
+      const index = tabsMenuList.value.findIndex(item => item.path === path);
+      if (index < 0) return Promise.resolve(false);
+      const targets = type === "left" ? tabsMenuList.value.slice(0, index) : tabsMenuList.value.slice(index + 1);
+      return closeTabs(targets.map(item => item.path));
     };
+    const closeMultipleTab = (keepPath?: string) =>
+      closeTabs(tabsMenuList.value.filter(item => item.path !== keepPath).map(item => item.path));
 
     // Set Tabs
     const setTabs = async (newTabsMenuList: ITabMenu[]) => {

@@ -10,7 +10,6 @@ import "@/styles/index.scss";
 import "virtual:uno.css";
 
 import ElementPlus from "element-plus";
-import { ElNotification } from "element-plus";
 
 // vue Router
 import router from "@/routers";
@@ -21,31 +20,12 @@ import http, { customErrorService } from "@/api";
 import { TEMPLATE_DEMO } from "@/config/template";
 import { initRequest } from "@/utils/request";
 
-// 全局代码错误捕捉
-const errorHandler = (error: any) => {
-  // 过滤 HTTP 请求错误
-  if (error.status || error.status === 0) return false;
-  const errorMap: { [key: string]: string } = {
-    InternalError: "Javascript引擎内部错误",
-    ReferenceError: "未找到对象",
-    TypeError: "使用了错误的类型或对象",
-    RangeError: "使用内置对象时，参数超范围",
-    SyntaxError: "语法错误",
-    EvalError: "错误的使用了Eval",
-    URIError: "URI错误"
-  };
-  const errorName = errorMap[error.name] || "未知错误";
-  ElNotification({
-    title: errorName,
-    message: error,
-    type: "error",
-    duration: 3000
-  });
-};
-
 const app = createApp(App);
 
-app.config.errorHandler = errorHandler;
+// 代码异常保留原始错误及堆栈，业务提示由请求和页面操作处理。
+app.config.errorHandler = (error, instance, info) => {
+  console.error("Vue 运行时错误", error, { component: instance?.$options.name, info });
+};
 
 async function bootstrap() {
   app.use(ElementPlus).use(pinia);
